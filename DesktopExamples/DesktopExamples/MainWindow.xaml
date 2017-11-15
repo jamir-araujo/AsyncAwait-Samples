@@ -1,0 +1,28 @@
+﻿<Window x:Class="DesktopExamples.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="500" Width="500">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+            <ColumnDefinition />
+            <ColumnDefinition />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+
+        <Button x:Name="SaveBigFileExampleButton" Grid.Row="1" Margin="5" Click="SaveBigFileExampleButton_Click">
+            <TextBlock TextWrapping="Wrap">Salvar arquivo grande</TextBlock>
+        </Button>
+        <Button x:Name="MultipleSmallAsyncOperationButton" Grid.Row="1" Grid.Column="1" Margin="5" Click="MultipleSmallAsyncOperationButton_Click">
+            <TextBlock TextWrapping="Wrap">Várias pequenas operações assíncronas</TextBlock>
+        </Button>
+    </Grid>
+</Window>

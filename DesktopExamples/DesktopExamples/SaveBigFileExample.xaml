@@ -1,0 +1,24 @@
+﻿<Window x:Class="DesktopExamples.SaveBigFileExample"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:DesktopSamples"
+        mc:Ignorable="d"
+        Title="SaveBigFileExample" Height="500" Width="500">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*" />
+            <RowDefinition Height="2*"/>
+            <RowDefinition Height="1*" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+
+        <Button Grid.Row="1" x:Name="SaveFileSyncButton" Content="Síncrono" Padding="5" Margin="5" Click="SaveFileSyncButton_Click" />
+        <Button Grid.Row="1" Grid.Column="1" x:Name="SaveFileAsyncButton" Content="Assíncrono" Padding="5" Margin="5" Click="SaveFileAsyncButton_Click" />
+
+    </Grid>
+</Window>
