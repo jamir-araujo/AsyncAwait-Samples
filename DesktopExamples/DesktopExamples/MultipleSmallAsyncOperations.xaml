@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:xctk="clr-namespace:Xceed.Wpf.Toolkit;assembly=Xceed.Wpf.Toolkit"
         mc:Ignorable="d"
-        Title="MultipleSmallAsyncOperations" WindowStartupLocation="CenterScreen" Height="500" Width="500">
+        Title="MultipleSmallAsyncOperations" WindowStartupLocation="CenterScreen" Height="500" Width="700">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition />

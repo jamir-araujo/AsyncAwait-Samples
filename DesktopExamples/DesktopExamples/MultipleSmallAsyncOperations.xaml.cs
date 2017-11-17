@@ -19,7 +19,6 @@ namespace DesktopExamples
         {
             var stream = File.Create("D:/temp.text");
 
-
             var stopwatch = Stopwatch.StartNew();
 
             var bytesToWrite = new byte[NumberOfBytesToWrite.Value ?? 0];
