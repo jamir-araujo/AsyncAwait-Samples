@@ -36,6 +36,8 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -72,6 +74,16 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Connected Services\AsyncDataServiceReference\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Connected Services\DataServiceReference\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
     <Compile Include="SaveBigFileExample.xaml.cs">
       <DependentUpon>SaveBigFileExample.xaml</DependentUpon>
     </Compile>
@@ -117,6 +129,32 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="Connected Services\AsyncDataServiceReference\DataService.wsdl" />
+    <None Include="Connected Services\AsyncDataServiceReference\DataService.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\AsyncDataServiceReference\DataService1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\AsyncDataServiceReference\DataService2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\AsyncDataServiceReference\DesktopExamples.AsyncDataServiceReference.Data.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\DataServiceReference\DataService.wsdl" />
+    <None Include="Connected Services\DataServiceReference\DataService.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\DataServiceReference\DataService1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\DataServiceReference\DataService2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\DataServiceReference\DesktopExamples.DataServiceReference.Data.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -125,6 +163,43 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services\" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadataStorage Include="Connected Services\AsyncDataServiceReference\" />
+    <WCFMetadataStorage Include="Connected Services\DataServiceReference\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\AsyncDataServiceReference\DataService.disco" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\AsyncDataServiceReference\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\AsyncDataServiceReference\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\AsyncDataServiceReference\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\DataServiceReference\DataService.disco" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\DataServiceReference\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\DataServiceReference\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\DataServiceReference\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
