@@ -6,22 +6,27 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="500" Width="900">
     <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="*" />
-            <RowDefinition Height="*" />
-            <RowDefinition Height="*" />
-        </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition />
             <ColumnDefinition />
             <ColumnDefinition />
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+        </Grid.RowDefinitions>
 
-        <Button x:Name="SaveBigFileExampleButton" Grid.Row="1" Margin="5" Click="SaveBigFileExampleButton_Click">
+        <Button x:Name="HowItWorksButton" Margin="5" Click="HowItWorksButton_Click">
+            <TextBlock TextWrapping="Wrap">Como funciona</TextBlock>
+        </Button>
+
+        <Button x:Name="SaveBigFileExampleButton" Grid.Column="1" Margin="5" Click="SaveBigFileExampleButton_Click">
             <TextBlock TextWrapping="Wrap">Salvar arquivo grande</TextBlock>
         </Button>
-        <Button x:Name="MultipleSmallAsyncOperationButton" Grid.Row="1" Grid.Column="1" Margin="5" Click="MultipleSmallAsyncOperationButton_Click">
+        <Button x:Name="MultipleSmallAsyncOperationButton" Grid.Column="2" Margin="5" Click="MultipleSmallAsyncOperationButton_Click">
             <TextBlock TextWrapping="Wrap">Várias pequenas operações assíncronas</TextBlock>
         </Button>
     </Grid>

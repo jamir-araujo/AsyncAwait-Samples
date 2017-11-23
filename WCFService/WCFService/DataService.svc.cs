@@ -1,4 +1,5 @@
-﻿using System.Runtime.Serialization;
+﻿using System;
+using System.Runtime.Serialization;
 
 namespace WCFService
 {
@@ -6,7 +7,7 @@ namespace WCFService
     {
         public Data GetData()
         {
-            return new Data("TEXT");
+            return new Data(Guid.NewGuid().ToString());
         }
     }
 
