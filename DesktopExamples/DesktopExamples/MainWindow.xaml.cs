@@ -32,6 +32,18 @@ namespace DesktopExamples
             window.ShowDialog();
         }
 
+        private void MultipleSmallWCFAsyncOperationButton_Click(object sender, RoutedEventArgs e)
+        {
+            var window = new MultipleSmallWCFAsyncOperations();
+            window.ShowDialog();
+        }
+
+        private void MultipleSmallDelais_Click(object sender, RoutedEventArgs e)
+        {
+            var window = new MultipleSmallDelais();
+            window.ShowDialog();
+        }
+
         private async void HowItWorksButton_Click(object sender, RoutedEventArgs e)
         {
             await DoSomethingAsync();

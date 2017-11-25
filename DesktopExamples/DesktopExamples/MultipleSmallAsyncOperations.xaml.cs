@@ -24,7 +24,7 @@ namespace DesktopExamples
             var bytesToWrite = new byte[NumberOfBytesToWrite.Value ?? 0];
             var iterations = NumberOfWrites.Value ?? 0;
 
-            SyncElapsedButton.Text = $"Escrevendo {bytesToWrite.Length} bytes, {iterations} vezes";
+            SyncElapsed.Text = $"Escrevendo {bytesToWrite.Length} bytes, {iterations} vezes";
 
             for (int i = 0; i < iterations; i++)
             {
@@ -32,7 +32,9 @@ namespace DesktopExamples
                 stream.Flush();
             }
 
-            SyncElapsedButton.Text = stopwatch.Elapsed.ToString();
+            stopwatch.Stop();
+
+            SyncElapsed.Text = stopwatch.Elapsed.ToString();
 
             stream.Dispose();
         }
@@ -46,7 +48,7 @@ namespace DesktopExamples
             var bytesToWrite = new byte[NumberOfBytesToWrite.Value ?? 0];
             var iterations = NumberOfWrites.Value ?? 0;
 
-            AsyncElapsedButton.Text = $"Escrevendo {bytesToWrite.Length} bytes, {iterations} vezes";
+            AsyncElapsed.Text = $"Escrevendo {bytesToWrite.Length} bytes, {iterations} vezes";
 
             for (int i = 0; i < iterations; i++)
             {
@@ -54,7 +56,9 @@ namespace DesktopExamples
                 await stream.FlushAsync();
             }
 
-            AsyncElapsedButton.Text = stopwatch.Elapsed.ToString();
+            stopwatch.Stop();
+
+            AsyncElapsed.Text = stopwatch.Elapsed.ToString();
 
             stream.Dispose();
         }

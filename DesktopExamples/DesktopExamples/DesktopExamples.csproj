@@ -84,6 +84,12 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
+    <Compile Include="MultipleSmallDelais.xaml.cs">
+      <DependentUpon>MultipleSmallDelais.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MultipleSmallWCFAsyncOperations.xaml.cs">
+      <DependentUpon>MultipleSmallWCFAsyncOperations.xaml</DependentUpon>
+    </Compile>
     <Compile Include="SaveBigFileExample.xaml.cs">
       <DependentUpon>SaveBigFileExample.xaml</DependentUpon>
     </Compile>
@@ -102,6 +108,14 @@
     <Page Include="MultipleSmallAsyncOperations.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="MultipleSmallDelais.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MultipleSmallWCFAsyncOperations.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="SaveBigFileExample.xaml">
       <Generator>MSBuild:Compile</Generator>
