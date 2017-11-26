@@ -1,13 +1,26 @@
-﻿using System.Threading.Tasks;
+﻿using StackExchange.Redis;
+using System.Diagnostics;
+using System.Threading.Tasks;
 using System.Web.Http;
 
 namespace WebApi.Controllers
 {
     public class AsyncController : ApiController
     {
-        public Task<string> Get()
+        private readonly IDatabase _database;
+
+        public AsyncController()
         {
-            return Task.FromResult("");
+            _database = WebApiApplication.RedisConnection.GetDatabase(0);
+        }
+
+        public async Task<string> Get(int id)
+        {
+            var stopwatch = Stopwatch.StartNew();
+
+            await _database.ExecuteOperationAsync(id);
+
+            return stopwatch.Elapsed.ToString();
         }
     }
 }
