@@ -1,0 +1,28 @@
+﻿<Window x:Class="DesktopExamples.MultipleWebApiCalls"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:DesktopExamples"
+        mc:Ignorable="d"
+        Title="MultipleWebApiCalls" Height="500" Width="700">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+            <ColumnDefinition />
+            
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+
+        <Button Grid.Row="1" x:Name="SyncCallsButton" Margin="5" Click="SyncCallsButton_Click">
+            <TextBlock>Sync</TextBlock>
+        </Button>
+        <Button Grid.Row="1" Grid.Column="1" x:Name="AsyncCallsButton" Margin="5" Click="AsyncCallsButton_Click" >
+            <TextBlock>Async</TextBlock>
+        </Button>
+    </Grid>
+</Window>

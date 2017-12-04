@@ -18,14 +18,14 @@ namespace StackExchange.Redis
             end
             return cycles";
 
-        public static void ExecuteOperation(this IDatabase database, long miliseconds)
+        public static void ExecuteOperation(this IDatabase database, long milliseconds)
         {
-            database.ScriptEvaluate(SCRIPT, values: new RedisValue[] { miliseconds });
+            database.ScriptEvaluate(SCRIPT, values: new RedisValue[] { milliseconds });
         }
 
-        public static Task ExecuteOperationAsync(this IDatabase database, long miliseconds)
+        public static Task ExecuteOperationAsync(this IDatabase database, long milliseconds)
         {
-            return database.ScriptEvaluateAsync(SCRIPT, values: new RedisValue[] { miliseconds });
+            return database.ScriptEvaluateAsync(SCRIPT, values: new RedisValue[] { milliseconds });
         }
     }
 }

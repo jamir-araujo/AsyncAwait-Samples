@@ -1,6 +1,9 @@
 ﻿using System.Web.Http;
 using StackExchange.Redis;
 using System.Diagnostics;
+using WebApi.Models;
+using System.Threading;
+using System;
 
 namespace WebApi.Controllers
 {
@@ -13,13 +16,24 @@ namespace WebApi.Controllers
             _database = WebApiApplication.RedisConnection.GetDatabase(0);
         }
 
-        public string Get(int id)
+        public OperationData Get(int milliseconds)
         {
+            var operationData = new OperationData();
+            operationData.ParamValue = milliseconds;
+            operationData.StartingThread = Thread.CurrentThread.ManagedThreadId;
+            operationData.StartTime = DateTime.Now;
+
             var stopwatch = Stopwatch.StartNew();
 
-            _database.ExecuteOperation(id);
+            _database.ExecuteOperation(milliseconds);
 
-            return stopwatch.Elapsed.ToString();
+            stopwatch.Stop();
+
+            operationData.Duration = stopwatch.Elapsed;
+            operationData.EndThread = Thread.CurrentThread.ManagedThreadId;
+            operationData.EndTime = DateTime.Now;
+
+            return operationData;
         }
     }
 }

@@ -26,21 +26,15 @@ namespace DesktopExamples
             window.ShowDialog();
         }
 
-        private void MultipleSmallAsyncOperationButton_Click(object sender, RoutedEventArgs e)
-        {
-            var window = new MultipleSmallAsyncOperations();
-            window.ShowDialog();
-        }
-
         private void MultipleSmallWCFAsyncOperationButton_Click(object sender, RoutedEventArgs e)
         {
             var window = new MultipleSmallWCFAsyncOperations();
             window.ShowDialog();
         }
 
-        private void MultipleSmallDelais_Click(object sender, RoutedEventArgs e)
+        private void MultipleWebApiCalls_Click(object sender, RoutedEventArgs e)
         {
-            var window = new MultipleSmallDelais();
+            var window = new MultipleWebApiCalls();
             window.ShowDialog();
         }
 
