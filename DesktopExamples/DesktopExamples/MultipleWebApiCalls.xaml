@@ -10,19 +10,76 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition />
             <ColumnDefinition />
-            
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition />
-            <RowDefinition />
-            <RowDefinition />
+            <RowDefinition Height="2*" />
         </Grid.RowDefinitions>
 
-        <Button Grid.Row="1" x:Name="SyncCallsButton" Margin="5" Click="SyncCallsButton_Click">
+        <Button x:Name="SyncRequestButton" Margin="5" Click="SyncRequestButton_Click">
             <TextBlock>Sync</TextBlock>
         </Button>
-        <Button Grid.Row="1" Grid.Column="1" x:Name="AsyncCallsButton" Margin="5" Click="AsyncCallsButton_Click" >
+
+        <Grid x:Name="SyncResults" Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+
+            <TextBlock Text="Quantidade de chamadas:" Margin="5" />
+            <TextBlock Text="{Binding RequestCount}" Grid.Column="1" Margin="5" />
+
+            <TextBlock Text="Tempo total:" Grid.Row="1" Margin="5" />
+            <TextBlock Text="{Binding Duration}" Grid.Row="1" Grid.Column="1" Margin="5" />
+
+            <TextBlock Text="Numero de threads usadas no servidor:" Grid.Row="2" Margin="5" />
+            <TextBlock Text="{Binding ThreadCount}" Grid.Row="2" Grid.Column="1" Margin="5" />
+
+            <TextBlock Text="Chamada mais rápida:" Grid.Row="3" Margin="5" />
+            <TextBlock Text="{Binding LongestRequestTime}" Grid.Row="3" Grid.Column="1" Margin="5" />
+
+            <TextBlock Text="Chamada mais demorada:" Grid.Row="4" Margin="5" />
+            <TextBlock Text="{Binding ShortestRequestTime}" Grid.Row="4" Grid.Column="1" Margin="5" />
+        </Grid>
+
+        <Button Grid.Column="1" x:Name="AsyncRequestButton" Margin="5" Click="AsyncRequestButton_Click" >
             <TextBlock>Async</TextBlock>
         </Button>
+
+        <Grid x:Name="AsyncResults" Grid.Row="1" Grid.Column="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+
+            <TextBlock Text="Quantidade de chamadas:" Margin="5" />
+            <TextBlock Text="{Binding RequestCount}" Grid.Column="1" Margin="5" />
+
+            <TextBlock Text="Tempo total:" Grid.Row="1" Margin="5" />
+            <TextBlock Text="{Binding Duration}" Grid.Row="1" Grid.Column="1" Margin="5" />
+
+            <TextBlock Text="Numero de threads usadas no servidor:" Grid.Row="2" Margin="5" />
+            <TextBlock Text="{Binding ThreadCount}" Grid.Row="2" Grid.Column="1" Margin="5" />
+
+            <TextBlock Text="Chamada mais longa:" Grid.Row="3" Margin="5" />
+            <TextBlock Text="{Binding LongestRequestTime}" Grid.Row="3" Grid.Column="1" Margin="5" />
+
+            <TextBlock Text="Chamada mais curta:" Grid.Row="4" Margin="5" />
+            <TextBlock Text="{Binding ShortestRequestTime}" Grid.Row="4" Grid.Column="1" Margin="5" />
+        </Grid>
     </Grid>
 </Window>

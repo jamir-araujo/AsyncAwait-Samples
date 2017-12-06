@@ -1,5 +1,4 @@
 ﻿using System.Web.Http;
-using StackExchange.Redis;
 using System.Diagnostics;
 using WebApi.Models;
 using System.Threading;
@@ -9,13 +8,6 @@ namespace WebApi.Controllers
 {
     public class SyncController : ApiController
     {
-        private readonly IDatabase _database;
-
-        public SyncController()
-        {
-            _database = WebApiApplication.RedisConnection.GetDatabase(0);
-        }
-
         public OperationData Get(int milliseconds)
         {
             var operationData = new OperationData();
@@ -25,7 +17,7 @@ namespace WebApi.Controllers
 
             var stopwatch = Stopwatch.StartNew();
 
-            _database.ExecuteOperation(milliseconds);
+            Thread.Sleep(TimeSpan.FromMilliseconds(milliseconds));
 
             stopwatch.Stop();
 

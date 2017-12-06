@@ -1,22 +1,16 @@
-﻿using StackExchange.Redis;
-using System;
+﻿using System;
 using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Web.Http;
+using System.Web.Mvc;
 using WebApi.Models;
 
 namespace WebApi.Controllers
 {
     public class AsyncController : ApiController
     {
-        private readonly IDatabase _database;
-
-        public AsyncController()
-        {
-            _database = WebApiApplication.RedisConnection.GetDatabase(0);
-        }
-
+        [OutputCache]
         public async Task<OperationData> Get(int milliseconds)
         {
             var operationData = new OperationData();
@@ -26,7 +20,7 @@ namespace WebApi.Controllers
 
             var stopwatch = Stopwatch.StartNew();
 
-            await _database.ExecuteOperationAsync(milliseconds).ConfigureAwait(false);
+            await Task.Delay(TimeSpan.FromMilliseconds(milliseconds));
 
             stopwatch.Stop();
 
