@@ -14,6 +14,7 @@
         <Grid.RowDefinitions>
             <RowDefinition />
             <RowDefinition Height="2*" />
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
         <Button x:Name="SyncRequestButton" Margin="5" Click="SyncRequestButton_Click">
@@ -81,5 +82,8 @@
             <TextBlock Text="Chamada mais curta:" Grid.Row="4" Margin="5" />
             <TextBlock Text="{Binding ShortestRequestTime}" Grid.Row="4" Grid.Column="1" Margin="5" />
         </Grid>
+
+        <Button Grid.Row="2" x:Name="ViewSyncDetails" Content="Detalhes" IsEnabled="False" Margin="5" Padding="5" Click="ViewSyncDetails_Click" />
+        <Button Grid.Row="2" Grid.Column="1" x:Name="ViewAsyncDetails" Content="Detalhes" IsEnabled="False" Margin="5" Padding="5" Click="ViewAsyncDetails_Click" />
     </Grid>
 </Window>

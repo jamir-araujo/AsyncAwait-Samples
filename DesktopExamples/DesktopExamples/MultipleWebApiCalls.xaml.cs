@@ -14,6 +14,9 @@ namespace DesktopExamples
     /// </summary>
     public partial class MultipleWebApiCalls : Window
     {
+        private List<OperationData> _lastSyncoperationsData;
+        private List<OperationData> _lastAsyncOperationsData;
+
         public MultipleWebApiCalls()
         {
             InitializeComponent();
@@ -104,7 +107,11 @@ namespace DesktopExamples
             await Task.WhenAll(tasks);
             stopWatch.Stop();
 
-            DisplayResults(SyncResults, tasks.Select(t => t.Result).ToList(), stopWatch.Elapsed);
+            var operationsData = tasks.Select(t => t.Result).ToList();
+            DisplayResults(SyncResults, operationsData, stopWatch.Elapsed);
+
+            _lastSyncoperationsData = operationsData;
+            ViewSyncDetails.IsEnabled = true;
         }
 
         private async void AsyncRequestButton_Click(object sender, RoutedEventArgs e)
@@ -193,7 +200,11 @@ namespace DesktopExamples
 
             stopWatch.Stop();
 
+            var operationsData = tasks.Select(t => t.Result).ToList();
             DisplayResults(AsyncResults, tasks.Select(t => t.Result).ToList(), stopWatch.Elapsed);
+
+            _lastAsyncOperationsData = operationsData;
+            ViewAsyncDetails.IsEnabled = true;
         }
 
         private void DisplayResults(Panel panel, List<OperationData> operationResults, TimeSpan duration)
@@ -221,7 +232,7 @@ namespace DesktopExamples
         {
             using (var http = new HttpClient())
             {
-                http.BaseAddress = new Uri("http://192.168.15.5/webapi-sample/api/");
+                http.BaseAddress = new Uri("http://192.168.15.6/webapi-sample/api/");
 
                 var response = await http.GetAsync($"{controller}/{milliseconds}");
                 return await response.Content.ReadAsJsonAsync<OperationData>();
@@ -235,6 +246,18 @@ namespace DesktopExamples
             public string Duration { get; set; }
             public string LongestRequestTime { get; set; }
             public string ShortestRequestTime { get; set; }
+        }
+
+        private void ViewSyncDetails_Click(object sender, RoutedEventArgs e)
+        {
+            var window = new OperationsDataDetails(_lastSyncoperationsData);
+            window.Show();
+        }
+
+        private void ViewAsyncDetails_Click(object sender, RoutedEventArgs e)
+        {
+            var window = new OperationsDataDetails(_lastAsyncOperationsData);
+            window.Show();
         }
     }
 }

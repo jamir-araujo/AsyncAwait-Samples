@@ -11,6 +11,7 @@ namespace WebApi.Controllers
         public OperationData Get(int milliseconds)
         {
             var operationData = new OperationData();
+            operationData.OperationId = Guid.NewGuid();
             operationData.ParamValue = milliseconds;
             operationData.StartingThread = Thread.CurrentThread.ManagedThreadId;
             operationData.StartTime = DateTime.Now;

@@ -1,0 +1,41 @@
+﻿<Window x:Class="DesktopExamples.OperationsDataDetails"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:timeline="clr-namespace:TimelineLibrary;assembly=TimelineLibrary"
+        mc:Ignorable="d"
+        Title="OperationsDataDetails" Height="500" Width="500">
+    <Grid>
+        <timeline:TimelineTray 
+            x:Name="timeline"
+            Grid.Row="0"
+            CalendarType="gregorian"
+            HorizontalAlignment="Stretch">
+
+            <Grid.RowDefinitions>
+
+                <RowDefinition Height="*" />
+                <RowDefinition Height="80" />
+
+            </Grid.RowDefinitions>
+
+            <timeline:TimelineBand
+                Grid.Row="0"
+                IsMainBand="True"
+                ItemSourceType="years"
+                HorizontalAlignment="Stretch"
+                TimelineWindowSize="20"
+                MaxEventHeight="130" />
+
+            <timeline:TimelineBand
+                Grid.Row="1"
+                Height="80"
+                HorizontalAlignment="Stretch"
+                ItemSourceType="decades"
+                TimelineWindowSize="16"
+                MaxEventHeight="4" />
+
+        </timeline:TimelineTray>
+    </Grid>
+</Window>
