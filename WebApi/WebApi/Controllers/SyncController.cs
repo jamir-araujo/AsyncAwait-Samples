@@ -8,25 +8,19 @@ namespace WebApi.Controllers
 {
     public class SyncController : ApiController
     {
-        public OperationData Get(int milliseconds)
+        public SyncRequestData Get(int milliseconds)
         {
-            var operationData = new OperationData();
-            operationData.OperationId = Guid.NewGuid();
-            operationData.ParamValue = milliseconds;
-            operationData.StartingThread = Thread.CurrentThread.ManagedThreadId;
-            operationData.StartTime = DateTime.Now;
-
-            var stopwatch = Stopwatch.StartNew();
+            var requestData = new SyncRequestData();
+            requestData.StartTime = DateTime.Now;
+            requestData.ParamValue = milliseconds;
+            requestData.ThreadId = Thread.CurrentThread.ManagedThreadId;
 
             Thread.Sleep(TimeSpan.FromMilliseconds(milliseconds));
 
-            stopwatch.Stop();
+            requestData.EndTime = DateTime.Now;
+            requestData.Duration = requestData.EndTime - requestData.StartTime;
 
-            operationData.Duration = stopwatch.Elapsed;
-            operationData.EndThread = Thread.CurrentThread.ManagedThreadId;
-            operationData.EndTime = DateTime.Now;
-
-            return operationData;
+            return requestData;
         }
     }
 }

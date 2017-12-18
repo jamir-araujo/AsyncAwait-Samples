@@ -11,25 +11,25 @@ namespace WebApi.Controllers
     public class AsyncController : ApiController
     {
         [OutputCache]
-        public async Task<OperationData> Get(int milliseconds)
+        public async Task<AsyncRequestData> Get(int milliseconds)
         {
-            var operationData = new OperationData();
-            operationData.OperationId = Guid.NewGuid();
-            operationData.ParamValue = milliseconds;
-            operationData.StartingThread = Thread.CurrentThread.ManagedThreadId;
-            operationData.StartTime = DateTime.Now;
+            var requestData = new AsyncRequestData();
+            requestData.StartTime = DateTime.Now;
+            requestData.ParamValue = milliseconds;
 
-            var stopwatch = Stopwatch.StartNew();
+            requestData.ThreadIdBeforeAsync = Thread.CurrentThread.ManagedThreadId;
+            requestData.TimeBeforeAsync = DateTime.Now;
 
             await Task.Delay(TimeSpan.FromMilliseconds(milliseconds));
 
-            stopwatch.Stop();
+            requestData.ThreadIdAfterAsync = Thread.CurrentThread.ManagedThreadId;
+            requestData.TimeAfterAsync = DateTime.Now;
+            requestData.AsyncDuration = requestData.TimeAfterAsync - requestData.TimeBeforeAsync;
+            
+            requestData.EndTime = DateTime.Now;
+            requestData.Duration = requestData.StartTime - requestData.EndTime;
 
-            operationData.Duration = stopwatch.Elapsed;
-            operationData.EndThread = Thread.CurrentThread.ManagedThreadId;
-            operationData.EndTime = DateTime.Now;
-
-            return operationData;
+            return requestData;
         }
     }
 }

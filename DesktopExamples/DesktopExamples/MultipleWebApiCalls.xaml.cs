@@ -14,8 +14,8 @@ namespace DesktopExamples
     /// </summary>
     public partial class MultipleWebApiCalls : Window
     {
-        private List<OperationData> _lastSyncoperationsData;
-        private List<OperationData> _lastAsyncOperationsData;
+        private List<SyncRequestData> _lastSyncoperationsData;
+        private List<AsyncRequestData> _lastAsyncOperationsData;
 
         public MultipleWebApiCalls()
         {
@@ -26,82 +26,82 @@ namespace DesktopExamples
         {
             var stopWatch = Stopwatch.StartNew();
 
-            var tasks = new List<Task<OperationData>>
+            var tasks = new List<Task<SyncRequestData>>
             {
-                GetAsync("sync", 1000),
-                GetAsync("sync", 1000),
-                GetAsync("sync", 1000),
-                GetAsync("sync", 1000),
-                GetAsync("sync", 1000),
-                GetAsync("sync", 1000),
-                GetAsync("sync", 1000),
-                GetAsync("sync", 50),
-                GetAsync("sync", 50),
-                GetAsync("sync", 50),
-                GetAsync("sync", 50),
-                GetAsync("sync", 50),
-                GetAsync("sync", 50),
-                GetAsync("sync", 50),
-                GetAsync("sync", 50),
-                GetAsync("sync", 50),
-                GetAsync("sync", 50),
-                GetAsync("sync", 50),
-                GetAsync("sync", 50),
-                GetAsync("sync", 50),
-                GetAsync("sync", 50),
-                GetAsync("sync", 50),
-                GetAsync("sync", 50),
-                GetAsync("sync", 50),
-                GetAsync("sync", 50),
-                GetAsync("sync", 50),
-                GetAsync("sync", 50),
-                GetAsync("sync", 50),
-                GetAsync("sync", 50),
-                GetAsync("sync", 50),
-                GetAsync("sync", 50),
-                GetAsync("sync", 50),
-                GetAsync("sync", 50),
-                GetAsync("sync", 50),
-                GetAsync("sync", 50),
-                GetAsync("sync", 50),
-                GetAsync("sync", 50),
-                GetAsync("sync", 1000),
-                GetAsync("sync", 1000),
-                GetAsync("sync", 1000),
-                GetAsync("sync", 1000),
-                GetAsync("sync", 1000),
-                GetAsync("sync", 1000),
-                GetAsync("sync", 1000),
-                GetAsync("sync", 50),
-                GetAsync("sync", 50),
-                GetAsync("sync", 50),
-                GetAsync("sync", 50),
-                GetAsync("sync", 50),
-                GetAsync("sync", 50),
-                GetAsync("sync", 50),
-                GetAsync("sync", 50),
-                GetAsync("sync", 50),
-                GetAsync("sync", 50),
-                GetAsync("sync", 50),
-                GetAsync("sync", 50),
-                GetAsync("sync", 50),
-                GetAsync("sync", 50),
-                GetAsync("sync", 50),
-                GetAsync("sync", 50),
-                GetAsync("sync", 50),
-                GetAsync("sync", 50),
-                GetAsync("sync", 50),
-                GetAsync("sync", 50),
-                GetAsync("sync", 50),
-                GetAsync("sync", 50),
-                GetAsync("sync", 50),
-                GetAsync("sync", 50),
-                GetAsync("sync", 50),
-                GetAsync("sync", 50),
-                GetAsync("sync", 50),
-                GetAsync("sync", 50),
-                GetAsync("sync", 50),
-                GetAsync("sync", 50)
+                GetAsync<SyncRequestData>("sync", 1000),
+                GetAsync<SyncRequestData>("sync", 1000),
+                GetAsync<SyncRequestData>("sync", 1000),
+                GetAsync<SyncRequestData>("sync", 1000),
+                GetAsync<SyncRequestData>("sync", 1000),
+                GetAsync<SyncRequestData>("sync", 1000),
+                GetAsync<SyncRequestData>("sync", 1000),
+                GetAsync<SyncRequestData>("sync", 50),
+                GetAsync<SyncRequestData>("sync", 50),
+                GetAsync<SyncRequestData>("sync", 50),
+                GetAsync<SyncRequestData>("sync", 50),
+                GetAsync<SyncRequestData>("sync", 50),
+                GetAsync<SyncRequestData>("sync", 50),
+                GetAsync<SyncRequestData>("sync", 50),
+                GetAsync<SyncRequestData>("sync", 50),
+                GetAsync<SyncRequestData>("sync", 50),
+                GetAsync<SyncRequestData>("sync", 50),
+                GetAsync<SyncRequestData>("sync", 50),
+                GetAsync<SyncRequestData>("sync", 50),
+                GetAsync<SyncRequestData>("sync", 50),
+                GetAsync<SyncRequestData>("sync", 50),
+                GetAsync<SyncRequestData>("sync", 50),
+                GetAsync<SyncRequestData>("sync", 50),
+                GetAsync<SyncRequestData>("sync", 50),
+                GetAsync<SyncRequestData>("sync", 50),
+                GetAsync<SyncRequestData>("sync", 50),
+                GetAsync<SyncRequestData>("sync", 50),
+                GetAsync<SyncRequestData>("sync", 50),
+                GetAsync<SyncRequestData>("sync", 50),
+                GetAsync<SyncRequestData>("sync", 50),
+                GetAsync<SyncRequestData>("sync", 50),
+                GetAsync<SyncRequestData>("sync", 50),
+                GetAsync<SyncRequestData>("sync", 50),
+                GetAsync<SyncRequestData>("sync", 50),
+                GetAsync<SyncRequestData>("sync", 50),
+                GetAsync<SyncRequestData>("sync", 50),
+                GetAsync<SyncRequestData>("sync", 50),
+                GetAsync<SyncRequestData>("sync", 1000),
+                GetAsync<SyncRequestData>("sync", 1000),
+                GetAsync<SyncRequestData>("sync", 1000),
+                GetAsync<SyncRequestData>("sync", 1000),
+                GetAsync<SyncRequestData>("sync", 1000),
+                GetAsync<SyncRequestData>("sync", 1000),
+                GetAsync<SyncRequestData>("sync", 1000),
+                GetAsync<SyncRequestData>("sync", 50),
+                GetAsync<SyncRequestData>("sync", 50),
+                GetAsync<SyncRequestData>("sync", 50),
+                GetAsync<SyncRequestData>("sync", 50),
+                GetAsync<SyncRequestData>("sync", 50),
+                GetAsync<SyncRequestData>("sync", 50),
+                GetAsync<SyncRequestData>("sync", 50),
+                GetAsync<SyncRequestData>("sync", 50),
+                GetAsync<SyncRequestData>("sync", 50),
+                GetAsync<SyncRequestData>("sync", 50),
+                GetAsync<SyncRequestData>("sync", 50),
+                GetAsync<SyncRequestData>("sync", 50),
+                GetAsync<SyncRequestData>("sync", 50),
+                GetAsync<SyncRequestData>("sync", 50),
+                GetAsync<SyncRequestData>("sync", 50),
+                GetAsync<SyncRequestData>("sync", 50),
+                GetAsync<SyncRequestData>("sync", 50),
+                GetAsync<SyncRequestData>("sync", 50),
+                GetAsync<SyncRequestData>("sync", 50),
+                GetAsync<SyncRequestData>("sync", 50),
+                GetAsync<SyncRequestData>("sync", 50),
+                GetAsync<SyncRequestData>("sync", 50),
+                GetAsync<SyncRequestData>("sync", 50),
+                GetAsync<SyncRequestData>("sync", 50),
+                GetAsync<SyncRequestData>("sync", 50),
+                GetAsync<SyncRequestData>("sync", 50),
+                GetAsync<SyncRequestData>("sync", 50),
+                GetAsync<SyncRequestData>("sync", 50),
+                GetAsync<SyncRequestData>("sync", 50),
+                GetAsync<SyncRequestData>("sync", 50)
             };
 
             await Task.WhenAll(tasks);
@@ -118,82 +118,82 @@ namespace DesktopExamples
         {
             var stopWatch = Stopwatch.StartNew();
 
-            var tasks = new List<Task<OperationData>>
+            var tasks = new List<Task<AsyncRequestData>>
             {
-                GetAsync("async", 1000),
-                GetAsync("async", 1000),
-                GetAsync("async", 1000),
-                GetAsync("async", 1000),
-                GetAsync("async", 1000),
-                GetAsync("async", 1000),
-                GetAsync("async", 1000),
-                GetAsync("async", 50),
-                GetAsync("async", 50),
-                GetAsync("async", 50),
-                GetAsync("async", 50),
-                GetAsync("async", 50),
-                GetAsync("async", 50),
-                GetAsync("async", 50),
-                GetAsync("async", 50),
-                GetAsync("async", 50),
-                GetAsync("async", 50),
-                GetAsync("async", 50),
-                GetAsync("async", 50),
-                GetAsync("async", 50),
-                GetAsync("async", 50),
-                GetAsync("async", 50),
-                GetAsync("async", 50),
-                GetAsync("async", 50),
-                GetAsync("async", 50),
-                GetAsync("async", 50),
-                GetAsync("async", 50),
-                GetAsync("async", 50),
-                GetAsync("async", 50),
-                GetAsync("async", 50),
-                GetAsync("async", 50),
-                GetAsync("async", 50),
-                GetAsync("async", 50),
-                GetAsync("async", 50),
-                GetAsync("async", 50),
-                GetAsync("async", 50),
-                GetAsync("async", 50),
-                GetAsync("async", 1000),
-                GetAsync("async", 1000),
-                GetAsync("async", 1000),
-                GetAsync("async", 1000),
-                GetAsync("async", 1000),
-                GetAsync("async", 1000),
-                GetAsync("async", 1000),
-                GetAsync("async", 50),
-                GetAsync("async", 50),
-                GetAsync("async", 50),
-                GetAsync("async", 50),
-                GetAsync("async", 50),
-                GetAsync("async", 50),
-                GetAsync("async", 50),
-                GetAsync("async", 50),
-                GetAsync("async", 50),
-                GetAsync("async", 50),
-                GetAsync("async", 50),
-                GetAsync("async", 50),
-                GetAsync("async", 50),
-                GetAsync("async", 50),
-                GetAsync("async", 50),
-                GetAsync("async", 50),
-                GetAsync("async", 50),
-                GetAsync("async", 50),
-                GetAsync("async", 50),
-                GetAsync("async", 50),
-                GetAsync("async", 50),
-                GetAsync("async", 50),
-                GetAsync("async", 50),
-                GetAsync("async", 50),
-                GetAsync("async", 50),
-                GetAsync("async", 50),
-                GetAsync("async", 50),
-                GetAsync("async", 50),
-                GetAsync("async", 50),
-                GetAsync("async", 50)
+                GetAsync<AsyncRequestData>("async", 1000),
+                GetAsync<AsyncRequestData>("async", 1000),
+                GetAsync<AsyncRequestData>("async", 1000),
+                GetAsync<AsyncRequestData>("async", 1000),
+                GetAsync<AsyncRequestData>("async", 1000),
+                GetAsync<AsyncRequestData>("async", 1000),
+                GetAsync<AsyncRequestData>("async", 1000),
+                GetAsync<AsyncRequestData>("async", 50),
+                GetAsync<AsyncRequestData>("async", 50),
+                GetAsync<AsyncRequestData>("async", 50),
+                GetAsync<AsyncRequestData>("async", 50),
+                GetAsync<AsyncRequestData>("async", 50),
+                GetAsync<AsyncRequestData>("async", 50),
+                GetAsync<AsyncRequestData>("async", 50),
+                GetAsync<AsyncRequestData>("async", 50),
+                GetAsync<AsyncRequestData>("async", 50),
+                GetAsync<AsyncRequestData>("async", 50),
+                GetAsync<AsyncRequestData>("async", 50),
+                GetAsync<AsyncRequestData>("async", 50),
+                GetAsync<AsyncRequestData>("async", 50),
+                GetAsync<AsyncRequestData>("async", 50),
+                GetAsync<AsyncRequestData>("async", 50),
+                GetAsync<AsyncRequestData>("async", 50),
+                GetAsync<AsyncRequestData>("async", 50),
+                GetAsync<AsyncRequestData>("async", 50),
+                GetAsync<AsyncRequestData>("async", 50),
+                GetAsync<AsyncRequestData>("async", 50),
+                GetAsync<AsyncRequestData>("async", 50),
+                GetAsync<AsyncRequestData>("async", 50),
+                GetAsync<AsyncRequestData>("async", 50),
+                GetAsync<AsyncRequestData>("async", 50),
+                GetAsync<AsyncRequestData>("async", 50),
+                GetAsync<AsyncRequestData>("async", 50),
+                GetAsync<AsyncRequestData>("async", 50),
+                GetAsync<AsyncRequestData>("async", 50),
+                GetAsync<AsyncRequestData>("async", 50),
+                GetAsync<AsyncRequestData>("async", 50),
+                GetAsync<AsyncRequestData>("async", 1000),
+                GetAsync<AsyncRequestData>("async", 1000),
+                GetAsync<AsyncRequestData>("async", 1000),
+                GetAsync<AsyncRequestData>("async", 1000),
+                GetAsync<AsyncRequestData>("async", 1000),
+                GetAsync<AsyncRequestData>("async", 1000),
+                GetAsync<AsyncRequestData>("async", 1000),
+                GetAsync<AsyncRequestData>("async", 50),
+                GetAsync<AsyncRequestData>("async", 50),
+                GetAsync<AsyncRequestData>("async", 50),
+                GetAsync<AsyncRequestData>("async", 50),
+                GetAsync<AsyncRequestData>("async", 50),
+                GetAsync<AsyncRequestData>("async", 50),
+                GetAsync<AsyncRequestData>("async", 50),
+                GetAsync<AsyncRequestData>("async", 50),
+                GetAsync<AsyncRequestData>("async", 50),
+                GetAsync<AsyncRequestData>("async", 50),
+                GetAsync<AsyncRequestData>("async", 50),
+                GetAsync<AsyncRequestData>("async", 50),
+                GetAsync<AsyncRequestData>("async", 50),
+                GetAsync<AsyncRequestData>("async", 50),
+                GetAsync<AsyncRequestData>("async", 50),
+                GetAsync<AsyncRequestData>("async", 50),
+                GetAsync<AsyncRequestData>("async", 50),
+                GetAsync<AsyncRequestData>("async", 50),
+                GetAsync<AsyncRequestData>("async", 50),
+                GetAsync<AsyncRequestData>("async", 50),
+                GetAsync<AsyncRequestData>("async", 50),
+                GetAsync<AsyncRequestData>("async", 50),
+                GetAsync<AsyncRequestData>("async", 50),
+                GetAsync<AsyncRequestData>("async", 50),
+                GetAsync<AsyncRequestData>("async", 50),
+                GetAsync<AsyncRequestData>("async", 50),
+                GetAsync<AsyncRequestData>("async", 50),
+                GetAsync<AsyncRequestData>("async", 50),
+                GetAsync<AsyncRequestData>("async", 50),
+                GetAsync<AsyncRequestData>("async", 50)
             };
 
             await Task.WhenAll(tasks);
@@ -207,7 +207,7 @@ namespace DesktopExamples
             ViewAsyncDetails.IsEnabled = true;
         }
 
-        private void DisplayResults(Panel panel, List<OperationData> operationResults, TimeSpan duration)
+        private void DisplayResults(Panel panel, List<SyncRequestData> operationResults, TimeSpan duration)
         {
             var requestResultsData = new RequestResultsData();
 
@@ -216,10 +216,27 @@ namespace DesktopExamples
             requestResultsData.LongestRequestTime = operationResults.Max(o => o.Duration).ToString();
             requestResultsData.ShortestRequestTime = operationResults.Min(o => o.Duration).ToString();
 
-            requestResultsData.ThreadCount = operationResults.Aggregate(new List<int>(), (list, o) => 
+            requestResultsData.ThreadCount = operationResults
+                .Select(p => p.ThreadId)
+                .Distinct()
+                .Count();
+
+            panel.DataContext = requestResultsData;
+        }
+
+        private void DisplayResults(Panel panel, List<AsyncRequestData> operationResults, TimeSpan duration)
+        {
+            var requestResultsData = new RequestResultsData();
+
+            requestResultsData.RequestCount = operationResults.Count;
+            requestResultsData.Duration = duration.ToString();
+            requestResultsData.LongestRequestTime = operationResults.Max(o => o.Duration).ToString();
+            requestResultsData.ShortestRequestTime = operationResults.Min(o => o.Duration).ToString();
+
+            requestResultsData.ThreadCount = operationResults.Aggregate(new List<int>(), (list, o) =>
             {
-                list.Add(o.StartingThread);
-                list.Add(o.EndThread);
+                list.Add(o.ThreadIdBeforeAsync);
+                list.Add(o.ThreadIdAfterAsync);
                 return list;
             })
             .Distinct()
@@ -228,14 +245,14 @@ namespace DesktopExamples
             panel.DataContext = requestResultsData;
         }
 
-        private async Task<OperationData> GetAsync(string controller, int milliseconds)
+        private async Task<T> GetAsync<T>(string controller, int milliseconds)
         {
             using (var http = new HttpClient())
             {
                 http.BaseAddress = new Uri("http://192.168.15.6/webapi-sample/api/");
 
                 var response = await http.GetAsync($"{controller}/{milliseconds}");
-                return await response.Content.ReadAsJsonAsync<OperationData>();
+                return await response.Content.ReadAsJsonAsync<T>();
             }
         }
 
