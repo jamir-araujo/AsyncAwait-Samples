@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using System.Collections.Generic;
 using System.Windows;
+using TimelineLibrary;
 
 namespace DesktopExamples
 {
@@ -16,18 +17,30 @@ namespace DesktopExamples
             timeline.MinDateTime = operationsDatails.Min(p => p.StartTime);
             timeline.MaxDateTime = operationsDatails.Max(p => p.EndTime);
 
+            var startThread = operationsDatails
+                .GroupBy(p => p.StartingThread)
+                .ToDictionary(p => p.Key, p => p.ToList());
+
+            var endThread = operationsDatails
+                .GroupBy(p => p.EndThread)
+                .ToDictionary(p => p.Key, p => p.ToList());
+
             var threads = operationsDatails
-                .Aggregate(new List<int>(), AggregateThread)
+                .Aggregate(new List<int>(), AggregateThreads)
                 .Distinct()
-                .ToDictionary(threadId => new List<OperationData>());
+                .ToDictionary(threadId => threadId, threadId => new List<OperationData>())
+                .Select(thread =>
+                {
+                    thread.Value.AddRange(startThread[thread.Key]);
+                    thread.Value.AddRange(endThread[thread.Key]);
 
-            var startThread = operationsDatails.OrderBy(p => p.StartingThread);
-            var endThread = operationsDatails.OrderBy(p => p.EndThread);
-
-
+                    return thread.Value;
+                })
+                .Distinct()
+                .ToList();
         }
 
-        private static List<int> AggregateThread(List<int> list, OperationData operationData)
+        private static List<int> AggregateThreads(List<int> list, OperationData operationData)
         {
             list.Add(operationData.StartingThread);
             list.Add(operationData.EndThread);

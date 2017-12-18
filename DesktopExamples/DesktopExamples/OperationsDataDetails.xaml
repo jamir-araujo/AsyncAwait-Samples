@@ -16,7 +16,6 @@
             <Grid.RowDefinitions>
 
                 <RowDefinition Height="*" />
-                <RowDefinition Height="80" />
 
             </Grid.RowDefinitions>
 
@@ -27,14 +26,6 @@
                 HorizontalAlignment="Stretch"
                 TimelineWindowSize="20"
                 MaxEventHeight="130" />
-
-            <timeline:TimelineBand
-                Grid.Row="1"
-                Height="80"
-                HorizontalAlignment="Stretch"
-                ItemSourceType="decades"
-                TimelineWindowSize="16"
-                MaxEventHeight="4" />
 
         </timeline:TimelineTray>
     </Grid>
