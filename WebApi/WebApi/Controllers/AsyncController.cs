@@ -27,7 +27,7 @@ namespace WebApi.Controllers
             requestData.AsyncDuration = requestData.TimeAfterAsync - requestData.TimeBeforeAsync;
             
             requestData.EndTime = DateTime.Now;
-            requestData.Duration = requestData.StartTime - requestData.EndTime;
+            requestData.Duration = requestData.EndTime - requestData.StartTime;
 
             return requestData;
         }

@@ -249,7 +249,7 @@ namespace DesktopExamples
         {
             using (var http = new HttpClient())
             {
-                http.BaseAddress = new Uri("http://192.168.15.6/webapi-sample/api/");
+                http.BaseAddress = new Uri("http://192.168.15.3/webapi-sample/api/");
 
                 var response = await http.GetAsync($"{controller}/{milliseconds}");
                 return await response.Content.ReadAsJsonAsync<T>();

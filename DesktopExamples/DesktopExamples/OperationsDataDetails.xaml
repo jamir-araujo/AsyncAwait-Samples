@@ -7,26 +7,40 @@
         mc:Ignorable="d"
         Title="OperationsDataDetails" Height="500" Width="500">
     <Grid>
-        <timeline:TimelineTray 
+        <ItemsControl x:Name="ThreadItemsControl">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <Grid>
+                    </Grid>
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+        </ItemsControl>
+
+        <!--<timeline:TimelineTray
             x:Name="timeline"
             Grid.Row="0"
-            CalendarType="gregorian"
-            HorizontalAlignment="Stretch">
+            CalendarType="gregorian">
 
             <Grid.RowDefinitions>
-
                 <RowDefinition Height="*" />
-
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
 
             <timeline:TimelineBand
                 Grid.Row="0"
                 IsMainBand="True"
-                ItemSourceType="years"
-                HorizontalAlignment="Stretch"
-                TimelineWindowSize="20"
-                MaxEventHeight="130" />
+                ItemSourceType="milliseconds10" />
 
-        </timeline:TimelineTray>
+            <timeline:TimelineBand
+                Grid.Row="1"
+                ItemSourceType="seconds" />
+
+            <timeline:TimelineBand
+                Grid.Row="2"
+                ItemSourceType="minutes"/>
+
+        </timeline:TimelineTray>-->
+
     </Grid>
 </Window>

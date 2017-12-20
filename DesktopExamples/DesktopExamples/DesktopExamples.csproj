@@ -121,10 +121,10 @@
     <Compile Include="MultipleWebApiCalls.xaml.cs">
       <DependentUpon>MultipleWebApiCalls.xaml</DependentUpon>
     </Compile>
-    <Compile Include="OperationData.cs" />
     <Compile Include="OperationsDataDetails.xaml.cs">
       <DependentUpon>OperationsDataDetails.xaml</DependentUpon>
     </Compile>
+    <Compile Include="RequestData.cs" />
     <Compile Include="SaveBigFileExample.xaml.cs">
       <DependentUpon>SaveBigFileExample.xaml</DependentUpon>
     </Compile>
