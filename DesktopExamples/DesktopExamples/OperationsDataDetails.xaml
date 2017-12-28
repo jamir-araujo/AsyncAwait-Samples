@@ -7,40 +7,12 @@
         mc:Ignorable="d"
         Title="OperationsDataDetails" Height="500" Width="500">
     <Grid>
-        <ItemsControl x:Name="ThreadItemsControl">
+        <ItemsControl x:Name="ThreadItemsControl" Grid.IsSharedSizeScope="True">
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
-                    <Grid>
-                    </Grid>
+                    <UniformGrid Columns="1" />
                 </ItemsPanelTemplate>
             </ItemsControl.ItemsPanel>
         </ItemsControl>
-
-        <!--<timeline:TimelineTray
-            x:Name="timeline"
-            Grid.Row="0"
-            CalendarType="gregorian">
-
-            <Grid.RowDefinitions>
-                <RowDefinition Height="*" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-            </Grid.RowDefinitions>
-
-            <timeline:TimelineBand
-                Grid.Row="0"
-                IsMainBand="True"
-                ItemSourceType="milliseconds10" />
-
-            <timeline:TimelineBand
-                Grid.Row="1"
-                ItemSourceType="seconds" />
-
-            <timeline:TimelineBand
-                Grid.Row="2"
-                ItemSourceType="minutes"/>
-
-        </timeline:TimelineTray>-->
-
     </Grid>
 </Window>
