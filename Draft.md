@@ -25,13 +25,13 @@ private Task<string> GetNameAsync(int id) { //... }
 ```
 
 ``` c#
-
 [CompilerGenerated]
 private sealed class ShowNameAsync_StateMachine : IAsyncStateMachine
 {
     public int _state;
     public AsyncTaskMethodBuilder _builder;
     public Draft _this;
+    public int id;
     private string name;
     private string result;
     private TaskAwaiter<string> _awaiter;
@@ -44,7 +44,7 @@ private sealed class ShowNameAsync_StateMachine : IAsyncStateMachine
             TaskAwaiter<string> awaiter;
             if (num != 0)
             {
-                awaiter = _this.GetNameAsync().GetAwaiter();
+                awaiter = _this.GetNameAsync(id).GetAwaiter();
                 if (!awaiter.IsCompleted)
                 {
                     num = (_state = 0);
@@ -63,6 +63,14 @@ private sealed class ShowNameAsync_StateMachine : IAsyncStateMachine
             result = awaiter.GetResult();
             name = result;
             result = null;
+            if (string.IsNullOrWhiteSpace(name))
+            {
+                name = "NOT FOUND";
+            }
+            else
+            {
+                name = name.ToUpper();
+            }
             _this.SetName(name);
         }
         catch (Exception exception)
@@ -95,15 +103,15 @@ private sealed class ShowNameAsync_StateMachine : IAsyncStateMachine
 
 [AsyncStateMachine(typeof(ShowNameAsync_StateMachine))]
 [DebuggerStepThrough]
-private Task ShowNameAsync()
+private Task ShowNameAsync(int id)
 {
     ShowNameAsync_StateMachine stateMachine = new ShowNameAsync_StateMachine();
     stateMachine._this = this;
+    stateMachine.id = id;
     stateMachine._builder = AsyncTaskMethodBuilder.Create();
     stateMachine._state = -1;
     AsyncTaskMethodBuilder builder = stateMachine._builder;
     builder.Start(ref stateMachine);
     return stateMachine._builder.Task;
 }
-
 ```
