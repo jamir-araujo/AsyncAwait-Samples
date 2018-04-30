@@ -3,6 +3,22 @@
 ## Como usar?
 
 ``` c#
+private async Task ShowNameAsync()
+{
+    string name = await GetNameAsync();
+
+    //...
+}
+
+private Task<string> GetNameAsync() { //... }
+```
+
+
+## Como funciona?
+
+#### Teu código
+
+``` c#
 
  private async Task ShowNameAsync()
 {
@@ -23,34 +39,34 @@
 private Task<string> GetNameAsync(int id) { //... }
 
 ```
-
+#### Código gerado
 ``` c#
 [CompilerGenerated]
 private sealed class ShowNameAsync_StateMachine : IAsyncStateMachine
 {
-    public int _state;
-    public AsyncTaskMethodBuilder _builder;
-    public Draft _this;
+    public int state;
+    public AsyncTaskMethodBuilder buidler;
+    public Draft scope;
     public int id;
-    private string name;
-    private string result;
+    private string _name;
+    private string _result;
     private TaskAwaiter<string> _awaiter;
 
-    private void MoveNext()
+    public void MoveNext()
     {
-        int num = _state;
+        int num = state;
         try
         {
             TaskAwaiter<string> awaiter;
             if (num != 0)
             {
-                awaiter = _this.GetNameAsync(id).GetAwaiter();
+                awaiter = scope.GetNameAsync(id).GetAwaiter();
                 if (!awaiter.IsCompleted)
                 {
-                    num = (_state = 0);
+                    num = (state = 0);
                     _awaiter = awaiter;
-                    ShowNameAsync_StateMachine @this = this;
-                    _builder.AwaitUnsafeOnCompleted(ref awaiter, ref @this);
+                    ShowNameAsync_StateMachine thisMachine = this;
+                    buidler.AwaitUnsafeOnCompleted(ref awaiter, ref thisMachine);
                     return;
                 }
             }
@@ -58,46 +74,34 @@ private sealed class ShowNameAsync_StateMachine : IAsyncStateMachine
             {
                 awaiter = _awaiter;
                 _awaiter = default(TaskAwaiter<string>);
-                num = (_state = -1);
+                num = (state = -1);
             }
-            result = awaiter.GetResult();
-            name = result;
-            result = null;
-            if (string.IsNullOrWhiteSpace(name))
+            _result = awaiter.GetResult();
+            _name = _result;
+            _result = null;
+            if (string.IsNullOrWhiteSpace(_name))
             {
-                name = "NOT FOUND";
+                _name = "NOT FOUND";
             }
             else
             {
-                name = name.ToUpper();
+                _name = _name.ToUpper();
             }
-            _this.SetName(name);
+            scope.SetName(_name);
         }
         catch (Exception exception)
         {
-            _state = -2;
-            _builder.SetException(exception);
+            state = -2;
+            buidler.SetException(exception);
             return;
         }
-        _state = -2;
-        _builder.SetResult();
-    }
-
-    void IAsyncStateMachine.MoveNext()
-    {
-        //ILSpy generated this explicit interface implementation from .override directive in MoveNext
-        this.MoveNext();
+        state = -2;
+        buidler.SetResult();
     }
 
     [DebuggerHidden]
-    private void SetStateMachine(IAsyncStateMachine stateMachine)
+    public void SetStateMachine(IAsyncStateMachine stateMachine)
     {
-    }
-
-    void IAsyncStateMachine.SetStateMachine(IAsyncStateMachine stateMachine)
-    {
-        //ILSpy generated this explicit interface implementation from .override directive in SetStateMachine
-        this.SetStateMachine(stateMachine);
     }
 }
 
@@ -106,12 +110,130 @@ private sealed class ShowNameAsync_StateMachine : IAsyncStateMachine
 private Task ShowNameAsync(int id)
 {
     ShowNameAsync_StateMachine stateMachine = new ShowNameAsync_StateMachine();
-    stateMachine._this = this;
+    stateMachine.scope = this;
     stateMachine.id = id;
-    stateMachine._builder = AsyncTaskMethodBuilder.Create();
-    stateMachine._state = -1;
-    AsyncTaskMethodBuilder builder = stateMachine._builder;
+    stateMachine.buidler = AsyncTaskMethodBuilder.Create();
+    stateMachine.state = -1;
+    AsyncTaskMethodBuilder builder = stateMachine.buidler;
     builder.Start(ref stateMachine);
-    return stateMachine._builder.Task;
+    return stateMachine.buidler.Task;
+}
+```
+
+### Mais de um await no método
+
+#### Teu código
+``` c#
+private async Task<string> GetFullNameAsync(int id)
+{
+    string firstName = await GetFirsNameAsync(id);
+    string lastName = await GetLastNameAsync(id);
+
+    return $"{firstName} {lastName}";
+}
+
+private Task<string> GetFirsNameAsync(int id) { //... }
+
+private Task<string> GetLastNameAsync(int id) { //... }
+
+```
+
+#### Código gerado
+``` c#
+[CompilerGenerated]
+private sealed class GetFullNameAsync_StateMachine : IAsyncStateMachine
+{
+    public int state;
+    public AsyncTaskMethodBuilder<string> builder;
+    public int id;
+    public Draft scope;
+    private string _firstName;
+    private string _lastName;
+    private string _result1;
+    private string _result2;
+    private TaskAwaiter<string> _awaiter;
+
+    public void MoveNext()
+    {
+        int num = state;
+        string result;
+        try
+        {
+            TaskAwaiter<string> awaiter2;
+            GetFullNameAsync_StateMachine thisMachine;
+            TaskAwaiter<string> awaiter;
+            switch (num)
+            {
+                default:
+                    awaiter2 = scope.GetFirsNameAsync(id).GetAwaiter();
+                    if (!awaiter2.IsCompleted)
+                    {
+                        num = (state = 0);
+                        _awaiter = awaiter2;
+                        thisMachine = this;
+                        builder.AwaitUnsafeOnCompleted(ref awaiter2, ref thisMachine);
+                        return;
+                    }
+                    goto IL_007d;
+                case 0:
+                    awaiter2 = _awaiter;
+                    _awaiter = default(TaskAwaiter<string>);
+                    num = (state = -1);
+                    goto IL_007d;
+                case 1:
+                    {
+                        awaiter = _awaiter;
+                        _awaiter = default(TaskAwaiter<string>);
+                        num = (state = -1);
+                        break;
+                    }
+                    IL_007d:
+                    _result1 = awaiter2.GetResult();
+                    _firstName = _result1;
+                    _result1 = null;
+                    awaiter = scope.GetLastNameAsync(id).GetAwaiter();
+                    if (awaiter.IsCompleted)
+                    {
+                        break;
+                    }
+                    num = (state = 1);
+                    _awaiter = awaiter;
+                    thisMachine = this;
+                    builder.AwaitUnsafeOnCompleted(ref awaiter, ref thisMachine);
+                    return;
+            }
+            _result2 = awaiter.GetResult();
+            _lastName = _result2;
+            _result2 = null;
+            result = string.Format("{0} {1}", _firstName, _lastName);
+        }
+        catch (Exception exception)
+        {
+            state = -2;
+            builder.SetException(exception);
+            return;
+        }
+        state = -2;
+        builder.SetResult(result);
+    }
+
+    [DebuggerHidden]
+    public void SetStateMachine(IAsyncStateMachine stateMachine)
+    {
+    }
+}
+
+[AsyncStateMachine(typeof(GetFullNameAsync_StateMachine))]
+[DebuggerStepThrough]
+private Task<string> GetFullNameAsync(int id)
+{
+    GetFullNameAsync_StateMachine stateMachine = new GetFullNameAsync_StateMachine();
+    stateMachine.scope = this;
+    stateMachine.id = id;
+    stateMachine.builder = AsyncTaskMethodBuilder<string>.Create();
+    stateMachine.state = -1;
+    AsyncTaskMethodBuilder<string> _builder = stateMachine.builder;
+    _builder.Start(ref stateMachine);
+    return stateMachine.builder.Task;
 }
 ```
