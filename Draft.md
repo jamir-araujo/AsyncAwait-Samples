@@ -2,7 +2,7 @@
 
 ## Como usar?
 
-``` c#
+``` csharp
 private async Task ShowNameAsync()
 {
     string name = await GetNameAsync();
@@ -10,17 +10,36 @@ private async Task ShowNameAsync()
     //...
 }
 
-private Task<string> GetNameAsync() { //... }
+private Task<string> GetNameAsync() { /*...*/ }
 ```
+
+### regras básicas
+
+* Para usar `await` ao chamar um método, este método deve retornar uma `Task` ou `Task<T>`
+    ``` csharp
+    private Task ShowNameAsync();
+    private Task<string> GetNameAsync();
+    ```
+* Para usar a palavra `await` dentro do escopo de um método, este método deve ser marcado como `async`
+    ``` csharp
+    private async Task ShowNameAsync()
+    {
+        string name = await GetNameAsync();
+
+        //...
+    }
+    ```
+* Métodos marcados como `async` devem retornar uma `Task`, `Task<T>` ou `void` (`async void` é extremamente desencorajado - mais sobre isso mais tarde)
+
+> Com essas regras já da pra ver que esse negócio de `async`, `await` e `Task` são meio viral.
+
+### regras de uso
 
 
 ## Como funciona?
 
-#### Teu código
-
-``` c#
-
- private async Task ShowNameAsync()
+``` csharp
+private async Task ShowNameAsync()
 {
     string name = await GetNameAsync(id);
 
@@ -36,11 +55,27 @@ private Task<string> GetNameAsync() { //... }
     //...
 }
 
-private Task<string> GetNameAsync(int id) { //... }
+private Task<string> GetNameAsync(int id) { /*...*/ }
 
 ```
-#### Código gerado
-``` c#
+
+### Código gerado
+
+``` csharp
+[AsyncStateMachine(typeof(ShowNameAsync_StateMachine))]
+[DebuggerStepThrough]
+private Task ShowNameAsync(int id)
+{
+    ShowNameAsync_StateMachine stateMachine = new ShowNameAsync_StateMachine();
+    stateMachine.scope = this;
+    stateMachine.id = id;
+    stateMachine.buidler = AsyncTaskMethodBuilder.Create();
+    stateMachine.state = -1;
+    AsyncTaskMethodBuilder builder = stateMachine.buidler;
+    builder.Start(ref stateMachine);
+    return stateMachine.buidler.Task;
+}
+
 [CompilerGenerated]
 private sealed class ShowNameAsync_StateMachine : IAsyncStateMachine
 {
@@ -104,26 +139,13 @@ private sealed class ShowNameAsync_StateMachine : IAsyncStateMachine
     {
     }
 }
-
-[AsyncStateMachine(typeof(ShowNameAsync_StateMachine))]
-[DebuggerStepThrough]
-private Task ShowNameAsync(int id)
-{
-    ShowNameAsync_StateMachine stateMachine = new ShowNameAsync_StateMachine();
-    stateMachine.scope = this;
-    stateMachine.id = id;
-    stateMachine.buidler = AsyncTaskMethodBuilder.Create();
-    stateMachine.state = -1;
-    AsyncTaskMethodBuilder builder = stateMachine.buidler;
-    builder.Start(ref stateMachine);
-    return stateMachine.buidler.Task;
-}
 ```
 
 ### Mais de um await no método
 
-#### Teu código
-``` c#
+Código escrito
+
+``` csharp
 private async Task<string> GetFullNameAsync(int id)
 {
     string firstName = await GetFirsNameAsync(id);
@@ -138,8 +160,23 @@ private Task<string> GetLastNameAsync(int id) { //... }
 
 ```
 
-#### Código gerado
-``` c#
+Código gerado
+
+``` csharp
+[AsyncStateMachine(typeof(GetFullNameAsync_StateMachine))]
+[DebuggerStepThrough]
+private Task<string> GetFullNameAsync(int id)
+{
+    GetFullNameAsync_StateMachine stateMachine = new GetFullNameAsync_StateMachine();
+    stateMachine.scope = this;
+    stateMachine.id = id;
+    stateMachine.builder = AsyncTaskMethodBuilder<string>.Create();
+    stateMachine.state = -1;
+    AsyncTaskMethodBuilder<string> _builder = stateMachine.builder;
+    _builder.Start(ref stateMachine);
+    return stateMachine.builder.Task;
+}
+
 [CompilerGenerated]
 private sealed class GetFullNameAsync_StateMachine : IAsyncStateMachine
 {
@@ -222,18 +259,6 @@ private sealed class GetFullNameAsync_StateMachine : IAsyncStateMachine
     {
     }
 }
-
-[AsyncStateMachine(typeof(GetFullNameAsync_StateMachine))]
-[DebuggerStepThrough]
-private Task<string> GetFullNameAsync(int id)
-{
-    GetFullNameAsync_StateMachine stateMachine = new GetFullNameAsync_StateMachine();
-    stateMachine.scope = this;
-    stateMachine.id = id;
-    stateMachine.builder = AsyncTaskMethodBuilder<string>.Create();
-    stateMachine.state = -1;
-    AsyncTaskMethodBuilder<string> _builder = stateMachine.builder;
-    _builder.Start(ref stateMachine);
-    return stateMachine.builder.Task;
-}
 ```
+
+## async/await além da Task
