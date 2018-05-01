@@ -30,11 +30,98 @@ private Task<string> GetNameAsync() { /*...*/ }
     }
     ```
 * Métodos marcados como `async` devem retornar uma `Task`, `Task<T>` ou `void` (`async void` é extremamente desencorajado - mais sobre isso mais tarde)
+* É convenção colocar o sufixo _Async_ nos métodos que retornam `Task` ou `Task<T>`.
 
-> Com essas regras já da pra ver que esse negócio de `async`, `await` e `Task` são meio viral.
+> Nota: Essas regras fazem o uso de `async`, `await` e `Tasks` bastante viral, assim como faz a refatoração para o uso de `async/await` bem trabalhosa.
 
-### regras de uso
+### exemplos de uso
 
+Não é necessário usar `await` logo na chamada do método. A `Task` pode ser colocada em umas variável local.
+
+```csharp
+
+Task<string> nameTask = GetNameAsync();
+//...
+string name = await nameTask;
+
+```
+
+Ou até mesmo em uma variável global
+
+```csharp
+public class Publisher
+{
+    private Task _pendingPublications;
+
+    public void StartPublishing(IEnumerable<string> messages)
+    {
+        var publications = new List<Task>();
+        foreach (var message in messages)
+        {
+            publications.Add(PublishMessageAsync(message));
+        }
+
+        _pendingPublications = Task.WhenAll(publications);
+    }
+
+    public Task WaitForPendingPublicationsAsync() => _pendingPublications;
+
+    private Task PublishMessageAsync(string message) { /*...*/ }
+}
+```
+
+Podemos usar no nosso c# do dia a dia.
+
+dentro de if
+
+``` csharp
+if (await CheckConditionAsync())
+{
+    //...
+}
+```
+
+como entrada de foreach e dentro de foreach
+
+``` csharp
+foreach (var value in await GetValuesAsync())
+{
+    //...
+}
+
+foreach(int id in resourceIds)
+{
+    var resource = await GetResourceAsync(id);
+
+    //...
+}
+```
+
+dentro de try/catch
+
+```csharp
+try
+{
+    await DoSomethingAsync();
+}
+catch (Exception e)
+{
+    await LogErrorAsync(e);
+}
+```
+
+Acho que já deu para entender.
+
+Porem temos uma limitação. Método marcados com `async` não podemos usar parâmetros `ref` ou `out`.
+
+```csharp
+    //Error CS1988 Async methods cannot have ref or out parameters
+    private async Task PublishMessageAsync(string message, ref int index)
+```
+
+## Por que usar?
+
+por que sim;
 
 ## Como funciona?
 
