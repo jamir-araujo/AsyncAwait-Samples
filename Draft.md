@@ -1,34 +1,154 @@
 # async/await
 
-## Como usar?
+## O que é?
+
+É uma funcionalidade do c# para fazer continuação de I/O assíncronos dentro do escopo de um método.
 
 ``` csharp
-private async Task ShowNameAsync()
+private async Task CheckAvailability(Guid id)
 {
-    string name = await GetNameAsync();
+    bool isAvailable = await _service.CheckAvailabilityAsync(id);
 
     //...
 }
+```
 
-private Task<string> GetNameAsync() { /*...*/ }
+I/O assíncrono antes
+
+```csharp
+private void CheckAvailability(Guid id)
+{
+    _service.CheckAvailabilityCompleted += service_CheckAvailabilityCompleted;
+    _service.CheckAvailabilityAsync(id);
+}
+
+private void service_CheckAvailabilityCompleted(object sender, CheckAvailabilityCompletedEventArgs e)
+{
+    _service.CheckAvailabilityCompleted -= service_CheckAvailabilityCompleted;
+    //...
+}
+```
+
+Um dos grandes problemas da forma clássica é perca do escopo original da chamada
+
+```csharp
+private void CheckAvailability(Guid id, string unavialableMessage)
+{
+    _service.CheckAvailabilityCompleted += service_CheckAvailabilityCompleted;
+    _service.CheckAvailabilityAsync(id);
+}
+
+private void service_CheckAvailabilityCompleted(object sender, CheckAvailabilityCompletedEventArgs e)
+{
+    _service.CheckAvailabilityCompleted -= service_CheckAvailabilityCompleted;
+    //...
+}
+```
+
+Usando UserState
+
+```csharp
+public void CheckAvailabilityAsync(Guid id);
+public void CheckAvailabilityAsync(Guid id, object userState);
+```
+
+```csharp
+private void CheckAvailability(Guid id, string unavialableMessage)
+{
+    _service.CheckAvailabilityCompleted += service_CheckAvailabilityCompleted;
+    _service.CheckAvailabilityAsync(id, unavialableMessage);
+}
+
+private void service_CheckAvailabilityCompleted(object sender, CheckAvailabilityCompletedEventArgs e)
+{
+    _service.CheckAvailabilityCompleted -= service_CheckAvailabilityCompleted;
+
+    var unavialableMessage = (string)e.UserState;
+    //...
+}
+```
+
+e se eu quiser fazer isso:
+
+```csharp
+private void CheckAvailability(Guid id, string unavialableMessage, string availableMessage)
+{
+    _service.CheckAvailabilityCompleted += service_CheckAvailabilityCompleted;
+    _service.CheckAvailabilityAsync(id, ...?);
+}
+```
+
+```csharp
+private void CheckAvailability(Guid id, string unavialableMessage, string availableMessage)
+{
+    _service.CheckAvailabilityCompleted += service_CheckAvailabilityCompleted;
+
+    var userState = new MySpecialUserStateForThisCase(unavialableMessage, availableMessage)
+    _service.CheckAvailabilityAsync(id, userState);
+}
+```
+
+```csharp
+private void CheckAvailability(Guid id, string unavialableMessage, string availableMessage)
+{
+    _service.CheckAvailabilityCompleted += (sender, args) =>
+    {
+        //os parâmetros estão disponivel aqui porque eles foram capturados pela expressão lambda
+    };
+
+    _service.CheckAvailabilityAsync(id);
+
+    //E o evento fica assinado para sempre.
+}
+```
+
+```csharp
+private void CheckAvailability(Guid id, string unavialableMessage, string availableMessage)
+{
+    Action<object, CheckAvailabilityCompletedEventArgs> handler = null;
+    handler = (sender, args) =>
+    {
+        _service.CheckAvailabilityCompleted -= handler;
+        //parâmetros também foram capturados pela expressão lambda
+    };
+
+    _service.CheckAvailabilityCompleted += handler;
+    _service.CheckAvailabilityAsync(id);
+}
+```
+
+Ou evitamos usar I/O assíncrono quando possível.
+
+```csharp
+private void CheckAvailability(Guid id, string unavialableMessage, string availableMessage)
+{
+    //Thead reponsavel pela chamada vai ficar parada até que o método CheckAvailability retorne.
+    bool isAvailable = _service.CheckAvailability(id);
+
+    //...
+}
+```
+
+Em código de server esse já o padrão para a maioria dos casos (veremos os problemas disso mais tarde).
+
+Mas em código do client, seja Windows Forms, WPF ou UWP, isso pode ser um problemas.
+Chamadas feitas nessas plataformas, normalmente são feitas pela main thread (ou UI Thread). Essa thread é responsável pela atualização dos elementos na tela, e quando essa thread executado código por muito tempo ou fica parada esperando uma operação de I/O síncrona, a tela da aplicação ficar irresponsiva.
+
+## Voltando ao async/await
+
+``` csharp
+private async Task CheckAvailability(Guid id)
+{
+    bool isAvailable = await _service.CheckAvailabilityAsync(id);
+
+    //...
+}
 ```
 
 ### regras básicas
 
 * Para usar `await` ao chamar um método, este método deve retornar uma `Task` ou `Task<T>`
-    ``` csharp
-    private Task ShowNameAsync();
-    private Task<string> GetNameAsync();
-    ```
 * Para usar a palavra `await` dentro do escopo de um método, este método deve ser marcado como `async`
-    ``` csharp
-    private async Task ShowNameAsync()
-    {
-        string name = await GetNameAsync();
-
-        //...
-    }
-    ```
 * Métodos marcados como `async` devem retornar uma `Task`, `Task<T>` ou `void` (`async void` é extremamente desencorajado - mais sobre isso mais tarde)
 * É convenção colocar o sufixo _Async_ nos métodos que retornam `Task` ou `Task<T>`.
 
@@ -39,11 +159,9 @@ private Task<string> GetNameAsync() { /*...*/ }
 Não é necessário usar `await` logo na chamada do método. A `Task` pode ser colocada em umas variável local.
 
 ```csharp
-
 Task<string> nameTask = GetNameAsync();
 //...
 string name = await nameTask;
-
 ```
 
 Ou até mesmo em uma variável global
@@ -119,9 +237,9 @@ Porem temos uma limitação. Método marcados com `async` não podemos usar par�
     private async Task PublishMessageAsync(string message, ref int index)
 ```
 
-## Por que usar?
+## Por que usar isso no meu código de server?
 
-por que sim;
+Melhor aproveitamento do threads.
 
 ## Como funciona?
 
