@@ -61,13 +61,18 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="AsyncDataService.svc" />
     <Content Include="DataService.svc" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AsyncDataService.svc.cs">
+      <DependentUpon>AsyncDataService.svc</DependentUpon>
+    </Compile>
     <Compile Include="DataService.svc.cs">
       <DependentUpon>DataService.svc</DependentUpon>
     </Compile>
+    <Compile Include="IAsyncDataService.cs" />
     <Compile Include="IDataService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
