@@ -12,7 +12,7 @@ namespace WebApi
 
         public static IWebHost BuildWebHost(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
-                .UseLibuv(options => options.ThreadCount = 1)
+                .UseSockets(options => options.IOQueueCount = 0)
                 .UseStartup<Startup>()
                 .Build();
     }
